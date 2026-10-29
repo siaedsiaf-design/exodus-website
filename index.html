@@ -426,7 +426,7 @@ footer{padding:48px 0 calc(40px + env(safe-area-inset-bottom,0px));border-top:1p
     </div>
     <div class="foot-sub">© 2026 ExodusCode. Not affiliated with Discord Inc.</div>
   </div>
-</footer>
+</footer><script>
 // ---- Live Discord Data Fetching ----
 const API_BASE = "https://exodus-code-theta.vercel.app"; 
 
@@ -438,19 +438,20 @@ async function fetchDiscordWidget(){
     updated: document.getElementById('lastUpdated'),
     feed: document.getElementById('feedList')
   };
-// Stats
-try {
-  const res = await fetch(`${API_BASE}/api/stats`);
-  if (!res.ok) throw new Error('API failed');
-  const data = await res.json();
-  el.online.textContent = data.online ?? '—';
-  el.total.textContent = data.total ?? '—';
-  el.voice.textContent = data.voice ?? '—';
-  el.updated.textContent = "Last sync: " + new Date().toLocaleTimeString();
-} catch (err) {
-  el.updated.textContent = "Last sync: backend offline";
-  console.warn('Stats fetch failed:', err);
-}
+
+  // Stats
+  try {
+    const res = await fetch(`${API_BASE}/api/stats`);
+    if (!res.ok) throw new Error('API failed');
+    const data = await res.json();
+    el.online.textContent = data.online ?? '—';
+    el.total.textContent = data.total ?? '—';
+    el.voice.textContent = data.voice ?? '—';
+    el.updated.textContent = "Last sync: " + new Date().toLocaleTimeString();
+  } catch (err) {
+    el.updated.textContent = "Last sync: backend offline";
+    console.warn('Stats fetch failed:', err);
+  }
 
   // Feed
   try {
@@ -478,6 +479,8 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-// تشغيل الدالة
 fetchDiscordWidget();
 setInterval(fetchDiscordWidget, 60000);
+</script>
+</body>
+</html>

@@ -438,20 +438,19 @@ async function fetchDiscordWidget(){
     updated: document.getElementById('lastUpdated'),
     feed: document.getElementById('feedList')
   };
-
-  // Stats
-  try {
-    const res = await fetch(`${API_BASE}/api/stats`);
-    if (!res.ok) throw new Error('API failed');
-    const data = await res.json();
-    el.online.textContent = data.online ?? '—';
-    el.total.textContent = data.total ?? '—';
-    el.voice.textContent = data.voice ?? '—';
-    el.updated.textContent = "Last sync: " + new Date().toLocaleTimeString();
-  } catch (err) {
-    el.updated.textContent = "Last sync: backend offline";
-    console.warn('Stats fetch failed:', err);
-  }
+// Stats
+try {
+  const res = await fetch(`${API_BASE}/api/stats`);
+  if (!res.ok) throw new Error('API failed');
+  const data = await res.json();
+  el.online.textContent = data.online ?? '—';
+  el.total.textContent = data.total ?? '—';
+  el.voice.textContent = data.voice ?? '—';
+  el.updated.textContent = "Last sync: " + new Date().toLocaleTimeString();
+} catch (err) {
+  el.updated.textContent = "Last sync: backend offline";
+  console.warn('Stats fetch failed:', err);
+}
 
   // Feed
   try {
